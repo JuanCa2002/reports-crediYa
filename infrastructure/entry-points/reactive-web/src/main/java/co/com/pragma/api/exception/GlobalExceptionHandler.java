@@ -1,9 +1,6 @@
 package co.com.pragma.api.exception;
 
 import co.com.pragma.api.dto.errors.ErrorResponse;
-import co.com.pragma.usecase.metric.exception.BusinessException;
-import co.com.pragma.usecase.metric.exception.NotFoundException;
-import co.com.pragma.usecase.metric.exception.UnauthorizedException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.web.WebProperties;
