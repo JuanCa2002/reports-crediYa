@@ -1,4 +1,4 @@
-package co.com.pragma.usecase.metric.exception;
+package co.com.pragma.api.exception;
 
 public class NotFoundException extends RuntimeException{
 
