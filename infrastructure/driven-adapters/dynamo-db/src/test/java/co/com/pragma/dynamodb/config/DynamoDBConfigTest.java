@@ -35,7 +35,7 @@ class DynamoDBConfigTest {
     @Test
     void testAmazonDynamoDBAsync() {
 
-        DynamoDbAsyncClient result = dynamoDBConfig.amazonDynamoDBAsync(
+        DynamoDbAsyncClient result = dynamoDBConfig.amazonDynamoDBDev(
                 publisher,
                 "region");
 

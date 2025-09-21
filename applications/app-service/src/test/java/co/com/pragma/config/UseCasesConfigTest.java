@@ -1,5 +1,6 @@
 package co.com.pragma.config;
 
+import co.com.pragma.model.metric.gateways.MetricRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,11 @@ public class UseCasesConfigTest {
     @Configuration
     @Import(UseCasesConfig.class)
     static class TestConfig {
+
+        @Bean
+        public MetricRepository metricRepository() {
+            return org.mockito.Mockito.mock(MetricRepository.class);
+        }
 
         @Bean
         public MyUseCase myUseCase() {
