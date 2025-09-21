@@ -36,7 +36,8 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/v3/api-docs/**",
                                 "/webjars/**",
-                                "/configuration/**").permitAll()
+                                "/configuration/**",
+                                "/actuator/health").permitAll()
                         .pathMatchers(HttpMethod.GET,"/api/v1/reportes/**").hasAnyAuthority("ADMINISTRADOR")
                         .anyExchange().authenticated()
                 )

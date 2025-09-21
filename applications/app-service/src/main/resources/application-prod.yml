@@ -25,6 +25,7 @@ aws:
   dynamodb:
     endpoint: "http://localhost:8000"
   region: ${DYNAMODB_REGION}
+  secretName: ${AWS_SECRET_NAME}
 management:
   endpoints:
     web:
