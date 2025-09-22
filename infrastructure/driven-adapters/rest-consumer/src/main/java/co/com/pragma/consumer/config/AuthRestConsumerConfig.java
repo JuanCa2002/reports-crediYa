@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @Configuration
-public class RestConsumerConfig {
+public class AuthRestConsumerConfig {
 
 
     @Bean
