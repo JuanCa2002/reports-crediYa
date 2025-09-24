@@ -66,12 +66,28 @@ adapter:
           slidingWindowSize: 10
           minimumNumberOfCalls: 10
           waitDurationInOpenState: "10s"
+        sendReport:
+          registerHealthIndicator: true
+          failureRateThreshold: 50
+          slowCallRateThreshold: 50
+          slowCallDurationThreshold: "2s"
+          permittedNumberOfCallsInHalfOpenState: 3
+          slidingWindowSize: 10
+          minimumNumberOfCalls: 10
+          waitDurationInOpenState: "10s"
 
 report:
   id: ${UNIQUE_REPORT_ID}
 
 sender:
   email: ${SENDER_DIARY_REPORT_EMAIL}
+
+shedlock:
+  table: ${LOCK_TABLE}
+
+logging:
+  level:
+    net.javacrumbs.shedlock: DEBUG
 
 
 
