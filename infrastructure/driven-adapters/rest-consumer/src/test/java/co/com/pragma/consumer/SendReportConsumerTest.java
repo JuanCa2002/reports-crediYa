@@ -4,6 +4,8 @@ package co.com.pragma.consumer;
 import co.com.pragma.consumer.sendreport.SendReportConsumer;
 import co.com.pragma.consumer.sendreport.dto.ReportRequestDTO;
 import co.com.pragma.consumer.sendreport.mapper.ReportMapper;
+import co.com.pragma.model.diaryproposal.DiaryProposal;
+import co.com.pragma.model.diaryproposal.gateways.DiaryProposalRepository;
 import co.com.pragma.model.metric.Metric;
 import co.com.pragma.model.metric.gateways.MetricRepository;
 import okhttp3.mockwebserver.MockResponse;
@@ -19,6 +21,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.test.StepVerifier;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 class SendReportConsumerTest {
@@ -33,6 +37,9 @@ class SendReportConsumerTest {
     @Mock
     private MetricRepository repository;
 
+    @Mock
+    private DiaryProposalRepository diaryProposalRepository;
+
     @BeforeAll
     static void setUpAll() throws IOException {
         mockBackEnd = new MockWebServer();
@@ -42,7 +49,7 @@ class SendReportConsumerTest {
     @BeforeEach
     void setUp() {
         var webClient = WebClient.builder().baseUrl(mockBackEnd.url("/").toString()).build();
-        restConsumer = new SendReportConsumer(mapper, webClient, repository);
+        restConsumer = new SendReportConsumer(mapper, webClient, repository, diaryProposalRepository);
     }
 
     @AfterAll
@@ -66,6 +73,16 @@ class SendReportConsumerTest {
                 .totalAmount(10000.0)
                 .build();
 
+        final DiaryProposal diaryProposal = DiaryProposal.builder()
+                        .id(BigInteger.ONE)
+                        .email("RANDOM@email.com")
+                        .proposalType("TIPO")
+                        .amount(1000.0)
+                        .baseSalary(500000.0)
+                        .interestRate(0.19)
+                        .state("APROBADO")
+                        .build();
+
         Mockito
                 .when(mapper.toRequest(Mockito.any(Metric.class)))
                 .thenReturn(request);
@@ -74,7 +91,7 @@ class SendReportConsumerTest {
                 .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .setResponseCode(HttpStatus.OK.value())
                 .setBody("{\"amount\" : 10000.0}"));
-        var response = restConsumer.sendReport(metric);
+        var response = restConsumer.sendReport(metric, List.of(diaryProposal));
 
         StepVerifier.create(response)
                 .verifyComplete();
